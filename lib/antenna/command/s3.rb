@@ -14,6 +14,8 @@ command :s3 do |c|
   c.option '-b', '--bucket BUCKET', 'S3 bucket name'
   c.option '--[no-]create', "(Don't) create bucket if it doesn't already exist"
   c.option '-r', '--region REGION', "AWS region (optional, defaults to us-east-1)"
+  c.option '-p', '--prefix PREFIX', "Manifest file prefix (optional, e.g. https://mys3.example.com)"
+
   c.option '-e', '--endpoint ENDPOINT', "S3 endpoint (optional, e.g. https://mys3.example.com)"
   c.option '-x', '--expires EXPIRES', "Expiration of URLs in seconds (optional, e.g. 86400 = one day)"
   c.option '-i', '--base BASE', "Base filename (optional, defaults to IPA filename without .ipa extension)"
@@ -39,6 +41,8 @@ command :s3 do |c|
       say_error "Missing either S3 region or endpoint" and abort unless @region
     end
 
+    @prefix = options.prefix
+    
     s3 = Antenna::Distributor::S3.new(@access_key_id, @secret_access_key, @region, @endpoint)
     distributor = Antenna::Distributor.new(s3)
     puts distributor.distribute @file, { 
@@ -47,7 +51,8 @@ command :s3 do |c|
       :public => !!options.public,
       :expire => options.expires, 
       :acl    => options.acl, 
-      :base   => options.base 
+      :base   => options.base,
+      :prefix => @prefix
     } 
   end
 

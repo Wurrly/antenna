@@ -22,6 +22,10 @@ module Antenna
         "application/octet-stream",
       )
 
+      ipa_url = options[:prefix] + "/#{base_filename}.ipa" if options[:prefix]
+
+       puts "ipa_url #{ipa_url}"
+
       # Distribute App Icon
       if app_icon = process_app_icon(ipa)
         app_icon_url = @distributor.distribute(
@@ -31,14 +35,24 @@ module Antenna
         ) 
       end
 
+      app_icon_url = options[:prefix] + "/#{base_filename}.png" if options[:prefix]
+
+       puts "app_icon_url #{app_icon_url}"
+
       # Distribute Manifest
       manifest = build_manifest(ipa, ipa_url, app_icon_url)
+
       manifest_url = @distributor.distribute(
         manifest.to_s,
         "#{base_filename}.plist",
         "text/xml",
       )
-      
+
+
+      manifest_url = options[:prefix] + "/#{base_filename}.plist" if options[:prefix]
+
+      puts "manifest_url #{manifest_url}"
+
       # Distribute HTML
       html = build_html(ipa, manifest_url, app_icon_url)
       html_url = @distributor.distribute(

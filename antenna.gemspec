@@ -6,11 +6,11 @@ require 'antenna/version'
 Gem::Specification.new do |spec|
   spec.name          = "antenna-ota"
   spec.version       = Antenna::VERSION
-  spec.authors       = ["Tobi Kremer"]
-  spec.email         = ["tobias.kremer@gmail.com"]
+  spec.authors       = ["Joshua Bauer"]
+  spec.email         = ["josh@wurrly.com"]
   spec.summary       = %q{Painless iOS over-the-air enterprise distribution}
   spec.description   = %q{Antenna aims to take the pain out of creating and distributing all the necessary files for Enterprise iOS over-the-air distribution. It generates the mandatory XML manifest, app icons and an HTML file, automatically extracting all the needed information from the specified .ipa file.}
-  spec.homepage      = "https://www.github.com/soulchild/antenna"
+  spec.homepage      = "https://www.github.com/Wurrly/antenna"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
